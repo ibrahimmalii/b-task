@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="filter">
     <input
       type="text"
-      class="form-control"
+      class="filter__input"
       v-model="filter"
       placeholder="filter"
     />
-    <button type="button" @click="clearFilter">Clear</button>
+    <button class="filter__btn" @click="clearFilter">Clear</button>
   </div>
 </template>
 
@@ -33,12 +33,15 @@ export default {
       } else {
         this.$emit("filter-update", "");
       }
-      window.history.pushState({ path: newurl }, "", newurl);
+      this.updateUrl(newurl);
     },
   },
   methods: {
     clearFilter() {
       this.filter = "";
+    },
+    updateUrl(newurl) {
+      window.history.pushState({ path: newurl }, "", newurl);
     },
   },
 };
