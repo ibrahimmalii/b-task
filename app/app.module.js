@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import store from './store';
 import 'ngVue';
 import 'ngVue/build/plugins.js';
 import PerformancePageComponent from './pages/performance-page.vue';
@@ -33,3 +34,10 @@ angular.module('appModule').directive('vNotFoundPage', (createVueComponent) => {
 angular.module('appModule').directive('vFilterChart', (createVueComponent) => {
   return createVueComponent(Vue.component('FilterChartComponent', FilterChartComponent));
 });
+
+angular.module('appModule')
+  .config(($ngVueProvider) => {
+    $ngVueProvider.setRootVueInstanceProps({
+      store,
+    });
+  });
