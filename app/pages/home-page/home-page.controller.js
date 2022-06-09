@@ -11,6 +11,19 @@ function homePageController(Employees) {
   homePageVm.originalEmployees = [];
   homePageVm.clonedEmployees = [];
   homePageVm.filterInput = '';
+  homePageVm.querySelector = '';
+  homePageVm.checkIfQuerySelectorExists = function () {
+    return (window.location.search.indexOf('filter') > -1);
+  };
+  homePageVm.mapAllEmployeesToMatchAllRegex = function (inputValue) {
+    homePageVm.clonedEmployees.map(employee => {
+      const regex = new RegExp(inputValue, 'gi');
+      employee.profile.name = employee.profile.name.replace(regex, match => `<mark>${match}</mark>`);
+      employee.profile.address = employee.profile.address.replace(regex, match => `<mark>${match}</mark>`);
+      employee.profile.about = employee.profile.about.replace(regex, match => `<mark>${match}</mark>`);
+      return employee;
+    });
+  };
 
   activate();
 
@@ -18,7 +31,11 @@ function homePageController(Employees) {
     Employees.getEmployees()
       .then(({ data }) => {
         homePageVm.originalEmployees = homePageVm.originalEmployees.concat(data.employees);
-        homePageVm.clonedEmployees = structuredClone(homePageVm.originalEmployees);
+
+        if (homePageVm.checkIfQuerySelectorExists()) {
+          homePageVm.querySelector = window.location.search.split('=')[1];
+        }
+        homePageVm.handleFilterUpdate(homePageVm.querySelector);
       });
   }
 
@@ -27,13 +44,12 @@ function homePageController(Employees) {
   };
 
   homePageVm.handleFilterUpdate = function (filterInput) {
-    homePageVm.filterInput = homePageVm.parsedFilter(filterInput);
-    homePageVm.clonedEmployees.map(employee => {
-      const regex = new RegExp(homePageVm.filterInput, 'gi');
-      employee.profile.name.replace(regex, match => `<mark>${match}</mark>`);
-      employee.profile.address.replace(regex, match => `<mark>${match}</mark>`);
-      employee.profile.about.replace(regex, match => `<mark>${match}</mark>`);
-      return employee;
-    });
+    homePageVm.clonedEmployees = structuredClone(homePageVm.originalEmployees);
+    if (filterInput) {
+      homePageVm.filterInput = homePageVm.parsedFilter(filterInput);
+      homePageVm.mapAllEmployeesToMatchAllRegex(homePageVm.filterInput);
+    } else {
+      homePageVm.clonedEmployees = structuredClone(homePageVm.originalEmployees);
+    }
   };
 }

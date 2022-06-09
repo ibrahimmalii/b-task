@@ -6,15 +6,7 @@ angular
     controllerAs: 'EmployeesListComponentVm',
     bindings: {
       employeesList: '<',
-      filterInput: '<',
     },
   });
 
-function EmployeesListComponent() {
-  const EmployeesListComponentVm = this;
-
-  EmployeesListComponentVm.handleFilterUpdate = function (filterInput) {
-    const result = EmployeesListComponentVm.parsedFilter(filterInput);
-    console.log(result);
-  };
-}
+function EmployeesListComponent() {}
