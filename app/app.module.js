@@ -12,6 +12,12 @@ angular.module('appModule', [
   'ngVue.plugins',
 ]);
 
+angular.module('appModule').filter('checkmark', function ($sce) {
+  return function (input) {
+    return $sce.trustAsHtml(input);
+  };
+});
+
 angular.module('appModule').directive('vPerformancePage', (createVueComponent) => {
   return createVueComponent(Vue.component('performancePageComponent', PerformancePageComponent));
 });
