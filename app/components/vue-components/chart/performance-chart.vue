@@ -35,6 +35,7 @@ export default {
 
   data() {
     return {
+      // chartData: [],
       chartData: [
         {
           date_ms: 1641772800000,
