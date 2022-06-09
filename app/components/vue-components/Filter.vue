@@ -20,7 +20,19 @@ export default {
   },
 
   watch: {
-    
+    search(val) {
+      let newurl = '';
+      if (val) {
+        this.$emit("search", val);
+        newurl =
+          window.location.protocol +
+          "//" +
+          window.location.host +
+          window.location.pathname +
+          `?filter=${val}`;
+      }
+      window.history.pushState({ path: newurl }, "", newurl);
+    },
   },
 };
 </script>
