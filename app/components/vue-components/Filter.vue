@@ -16,7 +16,7 @@ export default {
   emits: ["filter-update"],
   mounted() {
     if (window.location.search.indexOf("filter") > -1) {
-      const search = window.location.search.split("=")[1];
+      this.filter = window.location.search.split("=")[1];
       this.$emit("filter-update", this.filter);
     }
   },

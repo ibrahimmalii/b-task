@@ -6,15 +6,17 @@ const app = angular
 
 app.value('FilterComponent', FilterComponent);
 
-function homePageController(Employees) {
+function homePageController(Employees, $location) {
   const homePageVm = this;
   homePageVm.originalEmployees = [];
   homePageVm.clonedEmployees = [];
   homePageVm.filterInput = '';
   homePageVm.querySelector = '';
+
   homePageVm.checkIfQuerySelectorExists = function () {
-    return (window.location.search.indexOf('filter') > -1);
+    return ($location.search().filter);
   };
+
   homePageVm.mapAllEmployeesToMatchAllRegex = function (inputValue) {
     homePageVm.clonedEmployees.map(employee => {
       const regex = new RegExp(inputValue, 'gi');
@@ -33,7 +35,7 @@ function homePageController(Employees) {
         homePageVm.originalEmployees = homePageVm.originalEmployees.concat(data.employees);
 
         if (homePageVm.checkIfQuerySelectorExists()) {
-          homePageVm.querySelector = window.location.search.split('=')[1];
+          homePageVm.querySelector = $location.search().filter;
         }
         homePageVm.handleFilterUpdate(homePageVm.querySelector);
       });
