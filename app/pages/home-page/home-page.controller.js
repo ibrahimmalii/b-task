@@ -1,6 +1,10 @@
-angular
+import FilterComponent from '../../components/vue-components/Filter.vue';
+
+const app = angular
   .module('appModule')
   .controller('homeController', homePageController);
+
+app.value('FilterComponent', FilterComponent);
 
 function homePageController(Employees) {
   const homePageVm = this;
