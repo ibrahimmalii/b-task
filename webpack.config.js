@@ -18,13 +18,14 @@ module.exports = {
     new ESLintPlugin({
       failOnError: true,
       emitWarning: false,
-      outputReport: true
+      outputReport: true,
     }),
     new VueLoaderPlugin(),
   ],
   devServer: {
     static: './dist',
     hot: true,
+    historyApiFallback: true,
   },
   output: {
     filename: '[name].bundle.js',
@@ -35,7 +36,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.(html)$/,
@@ -91,15 +92,15 @@ module.exports = {
       // https://vue-loader.vuejs.org/guide/pre-processors.html
       // this will apply to both plain `.scss` files
       // AND `<style lang="scss">` blocks in `.vue` files
-      // {
-      //   test: /\.scss$/,
-      //   // include: [/vue-components|views/],
-      //   use: [
-      //     // 'vue-style-loader',
-      //     'css-loader',
-      //     'sass-loader',
-      //   ],
-      // },
+      {
+        test: /\.scss$/,
+        include: [/vue-components|views/],
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
     ],
   },
 };
