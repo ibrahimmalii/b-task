@@ -3,27 +3,27 @@
     <input
       type="text"
       class="form-control"
-      v-model="search"
-      placeholder="Search"
+      v-model="filter"
+      placeholder="filter"
     />
-    <button type="button">Clear</button>
+    <button type="button" @click="clearFilter">Clear</button>
   </div>
 </template>
 
 <script>
 export default {
   name: "filter",
+  emits: ["filter-data"],
   data() {
     return {
-      search: "",
+      filter: "",
     };
   },
-
   watch: {
-    search(val) {
-      let newurl = '';
+    filter(val) {
+      let newurl = "";
       if (val) {
-        this.$emit("search", val);
+        this.$emit("filter-data", val);
         newurl =
           window.location.protocol +
           "//" +
@@ -32,6 +32,11 @@ export default {
           `?filter=${val}`;
       }
       window.history.pushState({ path: newurl }, "", newurl);
+    },
+  },
+  methods: {
+    clearFilter() {
+      this.filter = "";
     },
   },
 };
