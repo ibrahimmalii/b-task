@@ -33,13 +33,13 @@ export default {
     VChart,
   },
 
-  mounted(){
-    this.$store.dispatch('performance/UPDATE_CHART_DATA');
+  mounted() {
+    this.$store.dispatch("performance/UPDATE_CHART_DATA");
   },
 
   computed: {
     chartData() {
-      return this.$store.getters['performance/getClonedChartData'];
+      return this.$store.getters["performance/getClonedChartData"];
     },
 
     initOptions() {
@@ -56,11 +56,21 @@ export default {
           left: "center",
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           transitionDuration: 0,
           confine: false,
           hideDelay: 0,
           padding: 0,
+          formatter (para) {
+            return `
+              <div class="c-chart__tooltip">
+                <div class="c-chart__tooltip-title">${para[0].axisValueLabel}</div>
+                <div class="c-chart__tooltip-content">
+                      ${para[0].marker} Team Performance Index: ${para[0].data}%
+                </div>
+              </div>
+            `;
+          },
         },
         grid: {
           left: "30px",
@@ -90,16 +100,41 @@ export default {
         },
         series: [
           {
+            name: "Team Performance Index",
             data: this.yAxisData,
             type: "line",
             symbol: "circle",
             symbolSize: 2,
             cursor: "default",
             lineStyle: {
-              width: 2,
+              width: 3,
             },
           },
         ],
+        visualMap: {
+          top: 50,
+          right: 0,
+          pieces: [
+            {
+              gt: 0,
+              lte: 50,
+              color: "#F5664C",
+            },
+            {
+              gt: 50,
+              lte: 80,
+              color: "#FADA10",
+            },
+            {
+              gt: 80,
+              lte: 100,
+              color: "#00994F",
+            },
+          ],
+          outOfRange: {
+            color: "#999",
+          },
+        },
       };
     },
 
@@ -119,3 +154,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.c-chart__container {
+  .c-chart__tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #223048;
+    border-radius: 5px;
+    padding: 10px;
+    .c-chart__tooltip-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .c-chart__tooltip-content {
+      font-size: 14px;
+      color: #fff;
+    }
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
