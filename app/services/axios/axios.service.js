@@ -1,7 +1,6 @@
-require('dotenv').config();
 import Axios from 'axios';
 const instance = Axios.create({
-  baseURL: process.env.baseURL,
+  baseURL: 'https://fe-task.getsandbox.com/',
   responseType: 'json',
   timeout: 20000,
 });
