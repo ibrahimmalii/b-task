@@ -9,6 +9,8 @@
   <employees-list employees-list="homePageVm.clonedEmployees"></employees-list>
 
   <div class="c-dashboard__footer">
-    <button class="c-button">Load More</button>
+    <button ng-if="!homePageVm.isAllEmployeesLoaded" class="c-button" ng-click="homePageVm.loadMoreEmployees()">
+      Load More
+    </button>
   </div>
 </div>
