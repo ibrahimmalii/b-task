@@ -33,9 +33,12 @@ function homePageController(Employees, $location) {
   activate();
 
   function activate() {
+    homePageVm.is_loading = true;
     Employees.getEmployees()
       .then(({ data }) => {
         homePageVm.handleEmployeeResponse(data);
+      }).finally(() => {
+        homePageVm.is_loading = false;
       });
   }
 
@@ -58,11 +61,13 @@ function homePageController(Employees, $location) {
     if (homePageVm.checkIfAllEmployeesLoaded()) {
       homePageVm.isAllEmployeesLoaded = true;
     }
-
     homePageVm.is_loading = true;
+
     Employees.loadMoreEmployees(homePageVm.current_employee_page)
       .then(({ data }) => {
         homePageVm.handleEmployeeResponse(data);
+      }).finally(() => {
+        homePageVm.is_loading = false;
       });
   };
 

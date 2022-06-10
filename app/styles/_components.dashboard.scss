@@ -27,6 +27,13 @@
     justify-content: center;
     align-items: center;
   }
+
+  .c-dashboard__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 }
 
 .c-filters__container {
