@@ -10,6 +10,9 @@ function homePageController(Employees, $location) {
   const homePageVm = this;
   homePageVm.originalEmployees = [];
   homePageVm.clonedEmployees = [];
+  homePageVm.current_employee_page = 1;
+  homePageVm.isAllEmployeesLoaded = false;
+  homePageVm.is_loading = false;
   homePageVm.filterInput = '';
   homePageVm.querySelector = '';
 
@@ -30,14 +33,12 @@ function homePageController(Employees, $location) {
   activate();
 
   function activate() {
+    homePageVm.is_loading = true;
     Employees.getEmployees()
       .then(({ data }) => {
-        homePageVm.originalEmployees = homePageVm.originalEmployees.concat(data.employees);
-
-        if (homePageVm.checkIfQuerySelectorExists()) {
-          homePageVm.querySelector = $location.search().filter;
-        }
-        homePageVm.handleFilterUpdate(homePageVm.querySelector);
+        homePageVm.handleEmployeeResponse(data);
+      }).finally(() => {
+        homePageVm.is_loading = false;
       });
   }
 
@@ -53,5 +54,37 @@ function homePageController(Employees, $location) {
     } else {
       homePageVm.clonedEmployees = structuredClone(homePageVm.originalEmployees);
     }
+  };
+
+  homePageVm.loadMoreEmployees = function () {
+    homePageVm.increasePageNumber();
+    if (homePageVm.checkIfAllEmployeesLoaded()) {
+      homePageVm.isAllEmployeesLoaded = true;
+    }
+    homePageVm.is_loading = true;
+
+    Employees.loadMoreEmployees(homePageVm.current_employee_page)
+      .then(({ data }) => {
+        homePageVm.handleEmployeeResponse(data);
+      }).finally(() => {
+        homePageVm.is_loading = false;
+      });
+  };
+
+  homePageVm.handleEmployeeResponse = function (response) {
+    homePageVm.originalEmployees = homePageVm.originalEmployees.concat(response.employees);
+    homePageVm.current_employee_page = response.current_page;
+    if (homePageVm.checkIfQuerySelectorExists()) {
+      homePageVm.querySelector = $location.search().filter;
+    }
+    homePageVm.handleFilterUpdate(homePageVm.querySelector);
+  };
+
+  homePageVm.increasePageNumber = function () {
+    homePageVm.current_employee_page += 1;
+  };
+
+  homePageVm.checkIfAllEmployeesLoaded = function () {
+    return homePageVm.current_employee_page === 7;
   };
 }

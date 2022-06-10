@@ -6,9 +6,13 @@
     />
   </div>
 
-  <employees-list employees-list="homePageVm.clonedEmployees"></employees-list>
-
+  <employees-list ng-hide="homePageVm.is_loading" employees-list="homePageVm.clonedEmployees"></employees-list>
+  <div class='c-dashboard__loader' ng-show="homePageVm.is_loading">
+    <img src="https://cdn.dribbble.com/users/1186261/screenshots/3718681/_______.gif" alt="">
+  </div>
   <div class="c-dashboard__footer">
-    <button class="c-button">Load More</button>
+    <button ng-if="!homePageVm.isAllEmployeesLoaded" ng-disabled="homePageVm.is_loading" class="c-button" ng-click="homePageVm.loadMoreEmployees()">
+      Load More
+    </button>
   </div>
 </div>
