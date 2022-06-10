@@ -61,6 +61,16 @@ export default {
           confine: false,
           hideDelay: 0,
           padding: 0,
+          formatter (para) {
+            return `
+              <div class="c-chart__tooltip">
+                <div class="c-chart__tooltip-title">${para[0].axisValueLabel}</div>
+                <div class="c-chart__tooltip-content">
+                      ${para[0].marker} Team Performance Index: ${para[0].data}%
+                </div>
+              </div>
+            `;
+          },
         },
         grid: {
           left: "30px",
@@ -144,3 +154,27 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.c-chart__container {
+  .c-chart__tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #223048;
+    border-radius: 5px;
+    padding: 10px;
+    .c-chart__tooltip-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .c-chart__tooltip-content {
+      font-size: 14px;
+      color: #fff;
+    }
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+}
+</style>
