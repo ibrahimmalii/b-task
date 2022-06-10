@@ -1,4 +1,4 @@
 export default {
-  getChartData: ({ chartData }) => chartData,
+  getClonedChartData: ({ clonedChartData }) => clonedChartData,
   getOriginChartData: ({ originChartData }) => originChartData,
 };

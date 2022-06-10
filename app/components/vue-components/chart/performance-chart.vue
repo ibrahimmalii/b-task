@@ -39,7 +39,7 @@ export default {
 
   computed: {
     chartData() {
-      return this.$store.getters['performance/getOriginChartData'];
+      return this.$store.getters['performance/getClonedChartData'];
     },
 
     initOptions() {

@@ -73,7 +73,7 @@
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  
+
   .filter__form-group {
     margin: 8px 0;
   }
@@ -91,13 +91,27 @@
     width: 30%;
   }
 
-  .filter__btn {
+  .filter__btn-success {
     height: 40px;
     background-color: #032e4b;
     color: white;
     min-width: 120px;
     padding: 0 16px;
     border-radius: 4px;
+  }
+
+  .filter__btn-danger {
+    height: 40px;
+    background-color: #851515;
+    color: white;
+    min-width: 120px;
+    padding: 0 16px;
+    border-radius: 4px;
+  }
+
+  .filter__error {
+    color: red;
+    margin-top: 8px;
   }
 }
 

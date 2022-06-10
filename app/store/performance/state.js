@@ -1,4 +1,4 @@
 export default () => ({
-  chartData: [],
+  clonedChartData: [],
   originChartData: [],
 });
