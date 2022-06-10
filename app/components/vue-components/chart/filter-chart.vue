@@ -35,9 +35,13 @@ export default {
     validateDates(){
       this.startDateError = null;
       this.endDateError = null;
-      this.startDateError = (this.startData > this.endData) ? 'Start date must be less than end date': null;
       this.startDateError = (!this.startData) ? 'Start date is required': null;
       this.endDateError = !this.endData ? 'End date is required': null;
+      if((this.startData && this.endData) && (this.startData > this.endData)){
+        this.startDateError = 'Start date must be less than end date';
+      } else if ((this.startData && this.endData) && (this.startData > this.endData)) {
+        this.startDateError = null;
+      }
       return !this.startDateError && !this.endDateError;
     },
     filter(){
